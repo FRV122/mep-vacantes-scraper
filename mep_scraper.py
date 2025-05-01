@@ -58,7 +58,7 @@ for i in range(1, len(options)):
         while True:
             page_source = driver.page_source
 
-            if "Inglés" in page_source:
+            if "Estudios Sociales" in page_source:
                 mensaje = f"📢 Vacante de Estudios Sociales encontrada en {option_text} (página {pagina})."
                 print(f"✅ {mensaje}")
                 enviar_telegram(mensaje)

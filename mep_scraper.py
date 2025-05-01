@@ -9,8 +9,8 @@ import os
 import requests
 
 # ----------- CONFIGURACIÓN TELEGRAM -----------
-TELEGRAM_TOKEN = '7862603133:AAEfGqFtDPgqeTBhfNiBwWF3JHGh2iV8tFI'
-CHAT_ID = '-1002631605847'
+TELEGRAM_TOKEN = 'TU_TOKEN_AQUI'
+CHAT_ID = 'TU_CHAT_ID_AQUI'
 
 def enviar_telegram(mensaje):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
@@ -26,15 +26,17 @@ if not os.path.exists(ruta_carpeta):
     os.makedirs(ruta_carpeta)
 ruta_archivo = os.path.join(ruta_carpeta, "vacantes_encontradas.txt")
 
-# ----------- CONFIGURAR SELENIUM -----------
+# ----------- CONFIGURAR SELENIUM EN MODO HEADLESS -----------
 opciones = webdriver.ChromeOptions()
-opciones.add_experimental_option("detach", True)
+opciones.add_argument('--headless')
+opciones.add_argument('--no-sandbox')
+opciones.add_argument('--disable-dev-shm-usage')
 driver = webdriver.Chrome(options=opciones)
 
 # ----------- ABRIR PÁGINA -----------
 driver.get("https://apps.mep.go.cr/formulario")
 wait = WebDriverWait(driver, 10)
-time.sleep(3)
+time.sleep(5)
 
 # Obtener opciones de regional
 select = driver.find_element(By.ID, "selectRegional")
@@ -48,7 +50,7 @@ for i in range(1, len(options)):
         option_text = options[i].text
         print(f"\n🔍 Revisando: {option_text}")
         options[i].click()
-        time.sleep(3)
+        time.sleep(5)
 
         pagina = 1
         encontrado = False
@@ -62,7 +64,7 @@ for i in range(1, len(options)):
                 enviar_telegram(mensaje)
                 encontrado = True
 
-                with open("C:\\Users\\deikr\\OneDrive\\Documents\\MEPvacantes\\vacantes_encontradas.txt", "a", encoding="utf-8") as f:
+                with open(ruta_archivo, "a", encoding="utf-8") as f:
                     f.write(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {option_text} - Página {pagina}\n")
 
             try:
@@ -99,7 +101,8 @@ for i in range(1, len(options)):
         print(f"❌ Error inesperado en la región {option_text}: {str(e)}")
 
 # ✅ Mensaje de finalización
-enviar_telegram("✅ Búsqueda finalizada en todas las regionales.")
+enviar_telegram("✅ Búsqueda finalizada en todas las regionales. Puedes revisar el archivo de registro.")
 
 driver.quit()
+
 

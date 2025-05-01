@@ -2,7 +2,7 @@ name: Ejecutar MEP Scraper
 
 on:
   schedule:
-    - cron: '0 */12 * * *'  # Ejecuta cada 12 horas
+    - cron: '0 12,0 * * *'  # Ejecuta a las 6am 12pm
   workflow_dispatch:  # Permite ejecución manual también
 
 jobs:

@@ -9,8 +9,8 @@ import os
 import requests
 
 # ----------- CONFIGURACIÓN TELEGRAM -----------
-TELEGRAM_TOKEN = 'TU_TOKEN_AQUI'
-CHAT_ID = 'TU_CHAT_ID_AQUI'
+TELEGRAM_TOKEN = '7862603133:AAEfGqFtDPgqeTBhfNiBwWF3JHGh2iV8tFI'
+CHAT_ID = '-1002631605847'
 
 def enviar_telegram(mensaje):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
@@ -64,9 +64,6 @@ for i in range(1, len(options)):
                 enviar_telegram(mensaje)
                 encontrado = True
 
-                with open(ruta_archivo, "a", encoding="utf-8") as f:
-                    f.write(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {option_text} - Página {pagina}\n")
-
             try:
                 boton_siguiente = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'button[aria-label="Next page"]')))
                 driver.execute_script("arguments[0].scrollIntoView();", boton_siguiente)
@@ -101,7 +98,7 @@ for i in range(1, len(options)):
         print(f"❌ Error inesperado en la región {option_text}: {str(e)}")
 
 # ✅ Mensaje de finalización
-enviar_telegram("✅ Búsqueda finalizada en todas las regionales. Puedes revisar el archivo de registro.")
+enviar_telegram("✅ Búsqueda finalizada en todas las regionales")
 
 driver.quit()
 

@@ -39,7 +39,7 @@ wait = WebDriverWait(driver, 10)
 time.sleep(5)
 
 # Obtener opciones de regional
-select = driver.find_element(By.ID, "selectRegional")
+select = driver.find_element(By.ID, "regionalSelect")
 options = select.find_elements(By.TAG_NAME, "option")
 
 # Iterar sobre cada región

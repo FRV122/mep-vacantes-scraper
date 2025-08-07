@@ -38,14 +38,14 @@ driver.get("https://apps.mep.go.cr/formulario")
 wait = WebDriverWait(driver, 10)
 time.sleep(5)
 
-# Obtener opciones de regional
+# Obtener opciones de regional (corregido el ID)
 select = driver.find_element(By.ID, "regionalSelect")
 options = select.find_elements(By.TAG_NAME, "option")
 
 # Iterar sobre cada región
 for i in range(1, len(options)):
     try:
-        select = driver.find_element(By.ID, "selectRegional")
+        select = driver.find_element(By.ID, "regionalSelect")  # ← corregido aquí también
         options = select.find_elements(By.TAG_NAME, "option")
         option_text = options[i].text
         print(f"\n🔍 Revisando: {option_text}")
@@ -95,7 +95,7 @@ for i in range(1, len(options)):
     except ElementClickInterceptedException as e:
         print(f"❌ Error al hacer clic en la región {option_text}: {str(e)}")
     except Exception as e:
-        print(f"❌ Error inesperado en la región {option_text}: {str(e)}")
+        print(f"❌ Error inesperado en la región {option_text if 'option_text' in locals() else '[REGIÓN DESCONOCIDA]'}: {str(e)}")
 
 # ✅ Mensaje de finalización
 enviar_telegram("✅ Búsqueda finalizada en todas las regionales")
